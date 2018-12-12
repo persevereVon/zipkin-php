@@ -47,14 +47,8 @@ class Endpoint
      * @return Endpoint
      * @throws \InvalidArgumentException
      */
-    public static function create($serviceName, $ipv4 = null, $ipv6 = null, $port = null)
+    public static function create(string $serviceName, ?string $ipv4 = null, ?string $ipv6 = null, ?int $port = null): self
     {
-        if ($serviceName !== (string) $serviceName) {
-            throw new InvalidArgumentException(
-                sprintf('Service name must be a string, got %s', gettype($serviceName))
-            );
-        }
-
         if ($ipv4 !== null && filter_var($ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
             throw new InvalidArgumentException(
                 sprintf('Invalid IPv4. Expected something in the range 0.0.0.0 and 255.255.255.255, got %s', $ipv4)
@@ -68,8 +62,6 @@ class Endpoint
         }
 
         if ($port !== null) {
-            $port = (int) $port;
-
             if ($port > 65535) {
                 throw new InvalidArgumentException(
                     sprintf('Invalid port. Expected a number between 0 and 65535, got %d', $port)
@@ -83,7 +75,7 @@ class Endpoint
     /**
      * @return Endpoint
      */
-    public static function createFromGlobals()
+    public static function createFromGlobals(): self
     {
         return new self(
             PHP_SAPI,
@@ -96,7 +88,7 @@ class Endpoint
     /**
      * @return Endpoint
      */
-    public static function createAsEmpty()
+    public static function createAsEmpty(): self
     {
         return new self('');
     }
@@ -104,7 +96,7 @@ class Endpoint
     /**
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return $this->serviceName;
     }
@@ -112,7 +104,7 @@ class Endpoint
     /**
      * @return string|null
      */
-    public function getIpv4()
+    public function getIpv4(): ?string
     {
         return $this->ipv4;
     }
@@ -120,7 +112,7 @@ class Endpoint
     /**
      * @return string|null
      */
-    public function getIpv6()
+    public function getIpv6(): ?string
     {
         return $this->ipv6;
     }
@@ -128,7 +120,7 @@ class Endpoint
     /**
      * @return int|null
      */
-    public function getPort()
+    public function getPort(): ?int
     {
         return $this->port;
     }
@@ -137,7 +129,7 @@ class Endpoint
      * @param string $serviceName
      * @return Endpoint
      */
-    public function withServiceName($serviceName)
+    public function withServiceName(string $serviceName): Endpoint
     {
         return new self($serviceName, $this->ipv4, $this->ipv6, $this->port);
     }
@@ -145,7 +137,7 @@ class Endpoint
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $endpoint = [
             'serviceName' => $this->serviceName,

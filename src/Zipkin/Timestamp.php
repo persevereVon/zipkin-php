@@ -7,7 +7,7 @@ namespace Zipkin\Timestamp;
  *
  * @return int
  */
-function now()
+function now(): int
 {
     return (int) (microtime(true) * 1000 * 1000);
 }
@@ -18,7 +18,7 @@ function now()
  * @param mixed $timestamp
  * @return bool
  */
-function isValid($timestamp)
+function isValid($timestamp): bool
 {
     return ($timestamp === (int) $timestamp)
         && ctype_digit((string) $timestamp)

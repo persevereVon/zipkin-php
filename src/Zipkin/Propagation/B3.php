@@ -52,7 +52,7 @@ final class B3 implements Propagation
     /**
      * @return array|string[]
      */
-    public function getKeys()
+    public function getKeys(): array
     {
         return [
             self::TRACE_ID_NAME,
@@ -66,7 +66,7 @@ final class B3 implements Propagation
     /**
      * {@inheritdoc}
      */
-    public function getInjector(Setter $setter)
+    public function getInjector(Setter $setter): callable
     {
         /**
          * @param TraceContext $traceContext
@@ -92,7 +92,7 @@ final class B3 implements Propagation
     /**
      * {@inheritdoc}
      */
-    public function getExtractor(Getter $getter)
+    public function getExtractor(Getter $getter): callable
     {
         /**
          * @param mixed $carrier
